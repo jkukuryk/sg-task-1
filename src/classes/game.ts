@@ -1,15 +1,19 @@
 import { getScreenSize, refreshScreenSize } from 'helper/screen';
-import { Application, autoDetectRenderer, ICanvas, IRenderer } from 'pixi.js';
+import { Application, Container } from 'pixi.js';
 
 export class Game {
     app: Application;
-    renderer: IRenderer<ICanvas>;
+    stageContainer: Container;
+    resizeTimeout: ReturnType<typeof setTimeout>;
 
     constructor() {
         const { width, height } = getScreenSize();
 
         this.onResize = this.onResize.bind(this);
         this.refresh = this.refresh.bind(this);
+        this.runResizeTimeout = this.runResizeTimeout.bind(this);
+        this.stageContainer = new Container();
+        this.resizeTimeout = setTimeout(this.onResize, 100);
 
         this.app = new Application({
             width,
@@ -19,26 +23,30 @@ export class Game {
             antialias: true,
             background: 0xe5ffce,
         });
-        this.renderer = autoDetectRenderer();
 
         const container = document.getElementById('game');
         if (container) {
             container.appendChild(this.app.view);
-            window.addEventListener('resize', this.onResize);
 
+            this.stageContainer.sortableChildren = true;
+            this.app.stage.addChild(this.stageContainer);
+
+            window.addEventListener('resize', this.runResizeTimeout);
             window.requestAnimationFrame(this.refresh);
         } else {
             console.error('cant find #game in body');
         }
     }
-
+    runResizeTimeout() {
+        clearTimeout(this.resizeTimeout);
+        this.resizeTimeout = setTimeout(this.onResize, 100);
+    }
     onResize() {
         const { width, height } = refreshScreenSize();
-        this.app.renderer.view.style.width = width + 'px';
-        this.app.renderer.view.style.height = height + 'px';
+        this.app.renderer.resize(width, height);
     }
     refresh() {
         window.requestAnimationFrame(this.refresh);
-        this.renderer.render(this.app.stage);
+        this.app.renderer.render(this.app.stage);
     }
 }
