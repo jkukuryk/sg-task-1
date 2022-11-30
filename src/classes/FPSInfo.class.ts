@@ -1,9 +1,10 @@
 import { sum } from 'lodash';
 import { Container, Graphics, TextStyle, Text } from 'pixi.js';
-import { LAYER_UI } from 'src/constants/layers';
+import { LAYER_FPS } from 'src/constants/layers';
 import { ONE_SECOND } from 'src/constants/time';
-import { createContainer } from '..';
+import { createAbsoluteContainer } from '..';
 import { MonoBehavior } from './monoBehavior';
+
 const defaultTimeStock = 4;
 export class FPSInfo extends MonoBehavior {
     lastTime: number;
@@ -25,7 +26,7 @@ export class FPSInfo extends MonoBehavior {
             fontSize: 12,
             fontWeight: 'bold',
         });
-        this.container = createContainer(LAYER_UI);
+        this.container = createAbsoluteContainer(LAYER_FPS);
         this.draw();
 
         this.text = new Text('...', this.style);

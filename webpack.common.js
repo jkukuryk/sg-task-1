@@ -8,9 +8,10 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js', '.json', '.png', '.jpg', '.mp3', '.svg', '.css', '.gif', '.mp4'],
         alias: {
-            helper: plath.resolve(__dirname, './src/helper'),
+            helper: path.resolve(__dirname, './src/helper'),
             assets: path.resolve(__dirname, './src/assets'),
             ui: path.resolve(__dirname, './src/ui'),
+            classes: path.resolve(__dirname, './src/classes'),
             src: path.resolve(__dirname, './src'),
         },
     },

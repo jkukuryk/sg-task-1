@@ -19,6 +19,7 @@
             "helper/*": ["src/helper/*"],
             "assets/*": ["src/assets/*"],
             "ui/*": ["src/ui/*"],
+            "classes/*": ["src/classes/*"],
             "src/*": ["src/*"]
         }
     },

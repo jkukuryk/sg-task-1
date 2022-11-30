@@ -1,6 +1,6 @@
 import { getScreenSize } from 'helper/screen';
 import { Container, Sprite } from 'pixi.js';
-import { createContainer } from 'src';
+import { createAbsoluteContainer } from 'src';
 import { MonoBehavior } from './monoBehavior';
 
 export class GameBackground extends MonoBehavior {
@@ -21,7 +21,7 @@ export class GameBackground extends MonoBehavior {
         this.sprite = Sprite.from(image);
         this.sprite.anchor.set(0.5);
 
-        this.container = createContainer(1);
+        this.container = createAbsoluteContainer(1);
         this.container.addChild(this.sprite);
         const { width, height } = getScreenSize();
         this.onResize(width, height);
