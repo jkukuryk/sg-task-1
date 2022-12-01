@@ -9,6 +9,7 @@ import { degreesToRadians, lerp } from 'helper/math';
 import { gsap, Power0 } from 'gsap';
 import { SoundManager } from 'classes/soundManager';
 import { SoundsType } from 'assets/sounds/soundList';
+import { FPSInfo } from 'classes/fpsInfo.class';
 
 const spriteSize = 3000;
 const cardGridSize = 12;
@@ -30,9 +31,12 @@ export class CardGame extends GameTemplate {
     gameContainer: Container;
     changeCardTimeout?: ReturnType<typeof setTimeout>;
     activeCard = -1;
+    fps: FPSInfo;
 
     constructor() {
         super();
+        this.fps = new FPSInfo();
+
         this.runAnimation = this.runAnimation.bind(this);
         this.cards = [] as CardData[];
         this.gameContainer = createContainer(1, true);
@@ -92,6 +96,7 @@ export class CardGame extends GameTemplate {
     }
     destroy() {
         clearTimeout(this.changeCardTimeout);
+        this.fps.destroy();
         if (this.gameContainer.parent) {
             this.gameContainer.parent.removeChild(this.gameContainer);
         }

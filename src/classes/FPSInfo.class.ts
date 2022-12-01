@@ -62,4 +62,9 @@ export class FPSInfo extends MonoBehavior {
         rect.drawRect(0, 0, 80, 35);
         this.container.addChild(rect);
     }
+    destroy() {
+        if (this.container.parent) {
+            this.container.parent.removeChild(this.container);
+        }
+    }
 }

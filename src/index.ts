@@ -3,7 +3,6 @@ import backgroundImage from 'assets/background/geometric-1732847.jpg';
 import { Game } from './classes/game';
 import { Container } from 'pixi.js';
 import { GameBackground } from './classes/backgroundGame.class';
-import { FPSInfo } from './classes/fpsInfo.class';
 import { DisplaySceneController } from './classes/displaySceneController.class';
 import { SoundManager } from 'classes/soundManager';
 import { getSoundAssets } from 'assets/sounds/soundList';
@@ -13,7 +12,6 @@ let game: Game;
 window.onload = () => {
     SoundManager.init(getSoundAssets());
     game = new Game();
-    new FPSInfo();
     new GameBackground(backgroundImage, 1000, 2000);
     new DisplaySceneController();
 };

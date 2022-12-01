@@ -4,7 +4,6 @@ import { createContainer } from '..';
 import buttonImage from 'assets/ui/buttonEmpty.png';
 import buttonTextImage from 'assets/ui/menuText.png';
 import backToMenuImage from 'assets/ui/menuBack.png';
-import { MonoBehavior } from './monoBehavior';
 import { TilingSprite } from '@pixi/sprite-tiling';
 import { Back, gsap } from 'gsap';
 import { PixiPlugin } from 'gsap/PixiPlugin';
@@ -13,6 +12,7 @@ import { SoundsType } from 'assets/sounds/soundList';
 import { CardGame } from 'src/scenes/CardGame';
 import { GameTemplate } from 'src/scenes/Game';
 import { gameSize } from 'helper/gameSize';
+import { ImageManipulation } from 'src/scenes/ImageManipulation/ImageManipulation';
 gsap.registerPlugin(PixiPlugin);
 
 enum Scenes {
@@ -136,13 +136,15 @@ export class DisplaySceneController {
                 this.removeGame(); //to be sure that container is empty;
                 this.currentGame = new CardGame();
                 break;
+            case Scenes.IMAGES:
+                this.removeGame(); //to be sure that container is empty;
+                this.currentGame = new ImageManipulation();
+                break;
         }
     }
     fadeButtons() {
         const activeBtn = this.menuButtons.find((btn) => btn.name === this.scene);
         if (activeBtn) {
-            console.log(activeBtn);
-
             gsap.to(activeBtn, {
                 width: activeBtn.width * 1.5,
                 height: activeBtn.height * 1.5,
