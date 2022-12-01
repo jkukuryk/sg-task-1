@@ -1,21 +1,20 @@
-import { Container } from 'pixi.js';
-import { LAYER_GAME } from 'src/constants/layers';
-import { createContainer } from '../..';
 import { GameTemplate } from '../Game';
 import { FireEmitter } from './FireEmitter';
 import flame1 from 'assets/fire/flame1.png';
 import flame2 from 'assets/fire/flame2.png';
+import flame3 from 'assets/fire/flame3.png';
+import itsFine from 'assets/fire/itsFine.png';
 
 export class Fire extends GameTemplate {
     fire?: FireEmitter;
-    emitterContainer: Container;
 
     constructor() {
         super([
             [flame1, 'flame1'],
             [flame2, 'flame2'],
+            [flame3, 'flame3'],
+            [itsFine, 'itsFine'],
         ]);
-        this.emitterContainer = createContainer(LAYER_GAME, true);
     }
     destroy(): void {
         if (this.fire) {

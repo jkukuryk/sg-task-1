@@ -1,13 +1,13 @@
-export const flameOptions = {
+export const sparksOptions = {
     lifetime: {
-        min: 0.5,
-        max: 2,
+        min: 1,
+        max: 3,
     },
     frequency: 0.008,
     spawnChance: 1,
     particlesPerWave: 1,
     emitterLifetime: 0.1,
-    maxParticles: 1000,
+    maxParticles: 10,
     pos: {
         x: 0,
         y: 300,
@@ -20,12 +20,12 @@ export const flameOptions = {
                 alpha: {
                     list: [
                         {
-                            value: 0.6,
+                            value: 1,
                             time: 0,
                         },
                         {
-                            value: 0.6,
-                            time: 0.7,
+                            value: 0.8,
+                            time: 0.8,
                         },
                         {
                             value: 0,
@@ -42,15 +42,12 @@ export const flameOptions = {
                 scale: {
                     list: [
                         {
-                            value: 0.5,
+                            value: 0.1,
                             time: 0,
                         },
+
                         {
-                            value: 1,
-                            time: 0.5,
-                        },
-                        {
-                            value: 0.2,
+                            value: 0.07,
                             time: 1,
                         },
                     ],
@@ -67,11 +64,11 @@ export const flameOptions = {
                             time: 0,
                         },
                         {
-                            value: 'fa2828',
+                            value: 'ffe733',
                             time: 0.7,
                         },
                         {
-                            value: '000000',
+                            value: 'fa2828',
                             time: 1,
                         },
                     ],
@@ -81,8 +78,8 @@ export const flameOptions = {
         {
             type: 'moveSpeedStatic',
             config: {
-                min: 23,
-                max: 360,
+                min: 300,
+                max: 400,
             },
         },
         {
@@ -91,8 +88,8 @@ export const flameOptions = {
                 accel: 0,
                 minSpeed: -90,
                 maxSpeed: 90,
-                minStart: 260,
-                maxStart: 290,
+                minStart: 270,
+                maxStart: 280,
             },
         },
         {
@@ -113,11 +110,11 @@ export const flameOptions = {
                 textures: ['flame1', 'flame2', 'flame3'],
             },
         },
-        // {
-        //     type: 'blendMode',
-        //     config: {
-        //         blendMode: 'screen',
-        //     },
-        // },
+        {
+            type: 'blendMode',
+            config: {
+                blendMode: 'screen',
+            },
+        },
     ],
 };

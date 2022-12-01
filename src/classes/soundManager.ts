@@ -76,6 +76,7 @@ class SoundController {
 function setVolumeListener() {
     document.addEventListener('keydown', handlePresentationSound);
     document.addEventListener('pointerdown', activateSound);
+    document.addEventListener('visibilitychange', onDocumentVisible);
 }
 function activateSound() {
     hadFirstInteraction = true;
@@ -98,5 +99,13 @@ function handlePresentationSound(e: { key: string }) {
         case '-':
             SoundManager.setVolume(Math.max(0, SoundManager.volume - 0.1));
             break;
+    }
+}
+
+function onDocumentVisible() {
+    if (document.visibilityState === 'visible') {
+        SoundManager.mute(false);
+    } else {
+        SoundManager.mute(true);
     }
 }

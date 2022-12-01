@@ -5,7 +5,7 @@ import { CardGame } from 'src/scenes/CardGame';
 import { Fire } from 'src/scenes/Fire/Fire';
 import { GameTemplate } from 'src/scenes/Game';
 import { ImageManipulation } from 'src/scenes/ImageManipulation/ImageManipulation';
-import { MainMenu } from 'src/scenes/mainMenu';
+import { MainMenu } from 'src/scenes/MainMenu';
 gsap.registerPlugin(PixiPlugin);
 
 export class DisplaySceneController {

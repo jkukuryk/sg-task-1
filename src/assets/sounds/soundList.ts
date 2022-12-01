@@ -1,14 +1,17 @@
 import click from './assets/TJSCXEW-interface-confirm.mp3';
-import flipCard from './assets/cardsound32562-37691.mp3';
+import putCard from './assets/cardsound32562-37691.mp3';
+import flipCard from './assets/flipcard-91468.mp3';
 
 export enum SoundsType {
     click = 'click',
     flipCard = 'flipCard',
+    putCard = 'putCard',
 }
 
 export const Sounds = {
     [SoundsType.click]: click,
     [SoundsType.flipCard]: flipCard,
+    [SoundsType.putCard]: putCard,
 };
 type SoundObject = {
     name: SoundsType;
@@ -32,6 +35,13 @@ const soundManagerAssets = [
         loop: false,
         autoplay: false,
         volume: 0.6,
+    },
+    {
+        name: SoundsType.putCard,
+        src: Sounds[SoundsType.putCard],
+        loop: false,
+        autoplay: false,
+        volume: 0.3,
     },
 ] as unknown as SoundObject[];
 

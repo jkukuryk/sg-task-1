@@ -93,6 +93,8 @@ export class CardGame extends GameTemplate {
                     bottomCard
                 );
             }
+            SoundManager.play(SoundsType.putCard, 700);
+
             gsap.to(topCard.container, {
                 x: endPosition[0] + topCard.order * translationX,
                 y: endPosition[1] - topCard.order * translationY,

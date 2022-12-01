@@ -5,7 +5,6 @@ import { Container, Graphics, TextStyle, Texture, Text } from 'pixi.js';
 import { LAYER_GAME } from 'src/constants/layers';
 import { ONE_SECOND } from 'src/constants/time';
 import { createContainer } from 'src/index';
-import emoji from 'assets/emoji/smileys-emotion-00.png';
 import { TilingSprite } from '@pixi/sprite-tiling';
 import { degreesToRadians, lerp } from 'helper/math';
 import { lipsum } from './lipsum';
@@ -35,7 +34,7 @@ export class ImageGenerator extends MonoBehavior {
         this.imageContainer = createContainer(LAYER_GAME);
         this.imageContainer.y = -400;
         this.imageContainer.alpha = 0;
-        this.emojiTexture = Texture.from(emoji);
+        this.emojiTexture = Texture.from('emoji');
     }
 
     update(deltaTime: number): void {
