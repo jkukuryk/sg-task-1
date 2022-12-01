@@ -27,65 +27,23 @@ const startPosition = [-250, -50];
 const endPosition = [150, 100];
 
 export class CardGame extends GameTemplate {
-    cards: CardData[];
+    cards = [] as CardData[];
     gameContainer: Container;
     changeCardTimeout?: ReturnType<typeof setTimeout>;
     activeCard = -1;
     fps: FPSInfo;
 
     constructor() {
-        super();
+        super([
+            [cardsImage, 'cardsImage'],
+            [cardsTemplate, 'cardsTemplate'],
+        ]);
         this.fps = new FPSInfo();
-
         this.runAnimation = this.runAnimation.bind(this);
         this.cards = [] as CardData[];
         this.gameContainer = createContainer(1, true);
         this.gameContainer.y = -900;
         this.gameContainer.alpha = 0;
-        for (let card = 0; card < CARD_TOTAL; card++) {
-            const cardContainer = createContainer(topZIndex - card, false, this.gameContainer);
-
-            const cardBackground = Sprite.from(cardsTemplate);
-            cardBackground.anchor.set(0.5);
-            cardContainer.addChild(cardBackground);
-
-            const row = Math.floor(card / cardGridSize);
-            const col = Math.floor(card % cardGridSize);
-            cardContainer.x = startPosition[0] + card * translationX;
-            cardContainer.y = startPosition[1] + card * translationY;
-
-            const mask = this.drawMask();
-            cardContainer.addChild(mask);
-            mask.x = 0;
-            mask.y = 0;
-            const cardImage = Texture.from(cardsImage);
-
-            const cardTexture = new TilingSprite(cardImage, cardImageSize, cardImageSize);
-            cardTexture.mask = mask;
-
-            cardTexture.anchor.set(0.5);
-            cardTexture.tilePosition.set(-cardImageSize * col, -cardImageSize * row);
-            cardContainer.addChild(cardTexture);
-            if (card !== 0) {
-                cardTexture.visible = false;
-            }
-            this.cards.push({ container: cardContainer, cardTexture: cardTexture, order: card });
-            this.gameContainer.addChild(cardContainer);
-        }
-        gsap.to(this.gameContainer, {
-            alpha: 1,
-            y: 0,
-            duration: 1,
-            delay: 0.4,
-        }).then(() => {
-            this.changeCardTimeout = setTimeout(this.runAnimation, NEXT_CARD_TIME);
-        });
-        setTimeout(() => {
-            this.cards.forEach((card) => {
-                card.container.width = lerp(1, 0.8, card.order / CARD_TOTAL) * cardSize;
-                card.container.height = lerp(1, 0.8, card.order / CARD_TOTAL) * cardSize;
-            });
-        }, 100);
     }
     drawMask() {
         const mask = new Graphics();
@@ -144,5 +102,51 @@ export class CardGame extends GameTemplate {
                 rotation: 0,
             });
         });
+    }
+    start(): void {
+        for (let card = 0; card < CARD_TOTAL; card++) {
+            const cardContainer = createContainer(topZIndex - card, false, this.gameContainer);
+
+            const cardBackground = Sprite.from(cardsTemplate);
+            cardBackground.anchor.set(0.5);
+            cardContainer.addChild(cardBackground);
+
+            const row = Math.floor(card / cardGridSize);
+            const col = Math.floor(card % cardGridSize);
+            cardContainer.x = startPosition[0] + card * translationX;
+            cardContainer.y = startPosition[1] + card * translationY;
+
+            const mask = this.drawMask();
+            cardContainer.addChild(mask);
+            mask.x = 0;
+            mask.y = 0;
+            const cardImage = Texture.from(cardsImage);
+
+            const cardTexture = new TilingSprite(cardImage, cardImageSize, cardImageSize);
+            cardTexture.mask = mask;
+
+            cardTexture.anchor.set(0.5);
+            cardTexture.tilePosition.set(-cardImageSize * col, -cardImageSize * row);
+            cardContainer.addChild(cardTexture);
+            if (card !== 0) {
+                cardTexture.visible = false;
+            }
+            this.cards.push({ container: cardContainer, cardTexture: cardTexture, order: card });
+            this.gameContainer.addChild(cardContainer);
+        }
+        gsap.to(this.gameContainer, {
+            alpha: 1,
+            y: 0,
+            duration: 1,
+            delay: 0.4,
+        }).then(() => {
+            this.changeCardTimeout = setTimeout(this.runAnimation, NEXT_CARD_TIME);
+        });
+        setTimeout(() => {
+            this.cards.forEach((card) => {
+                card.container.width = lerp(1, 0.8, card.order / CARD_TOTAL) * cardSize;
+                card.container.height = lerp(1, 0.8, card.order / CARD_TOTAL) * cardSize;
+            });
+        }, 100);
     }
 }
