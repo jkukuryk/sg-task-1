@@ -6,28 +6,31 @@ import cardsTemplate from 'assets/cards/blankCard.png';
 import { createContainer } from '..';
 import { GameTemplate } from './Game';
 import { degreesToRadians, lerp } from 'helper/math';
-import { Back, gsap, Power0 } from 'gsap';
+import { gsap, Power0 } from 'gsap';
+import { SoundManager } from 'classes/soundManager';
+import { SoundsType } from 'assets/sounds/soundList';
 
 const spriteSize = 3000;
 const cardGridSize = 12;
 const CARD_TOTAL = cardGridSize * cardGridSize;
 const cardImageSize = spriteSize / cardGridSize;
-const translationX = 1.2;
+const translationX = 0.3;
 const translationY = 0.8;
 const NEXT_CARD_TIME = 1000;
-const cardSize = 300;
+const cardSize = 250;
 
-let topZIndex = 150;
+let topZIndex = 220;
 
 type CardData = { container: Container; cardTexture: TilingSprite; order: number };
-const startPosition = [-350, -50];
-const endPosition = [350, 100];
+const startPosition = [-250, -50];
+const endPosition = [150, 100];
 
 export class CardGame extends GameTemplate {
     cards: CardData[];
     gameContainer: Container;
     changeCardTimeout?: ReturnType<typeof setTimeout>;
     activeCard = -1;
+
     constructor() {
         super();
         this.runAnimation = this.runAnimation.bind(this);
@@ -55,7 +58,7 @@ export class CardGame extends GameTemplate {
 
             const cardTexture = new TilingSprite(cardImage, cardImageSize, cardImageSize);
             cardTexture.mask = mask;
-            // cardTexture.scale.set(imageScale, imageScale);
+
             cardTexture.anchor.set(0.5);
             cardTexture.tilePosition.set(-cardImageSize * col, -cardImageSize * row);
             cardContainer.addChild(cardTexture);
@@ -89,14 +92,17 @@ export class CardGame extends GameTemplate {
     }
     destroy() {
         clearTimeout(this.changeCardTimeout);
-        this.gameContainer.parent.removeChild(this.gameContainer);
+        if (this.gameContainer.parent) {
+            this.gameContainer.parent.removeChild(this.gameContainer);
+        }
     }
     runAnimation() {
-        this.activeCard++;
-        if (this.activeCard >= CARD_TOTAL) {
+        if (this.activeCard > CARD_TOTAL) {
             clearTimeout(this.changeCardTimeout);
             return;
         }
+        this.activeCard++;
+
         this.changeCardTimeout = setTimeout(this.runAnimation, NEXT_CARD_TIME);
         const topCard = this.cards[this.activeCard];
         if (this.activeCard + 1 < CARD_TOTAL) {
@@ -105,6 +111,7 @@ export class CardGame extends GameTemplate {
         }
         topZIndex++;
         topCard.container.zIndex = topZIndex;
+        SoundManager.play(SoundsType.flipCard);
 
         gsap.to(topCard.container, {
             rotation: degreesToRadians(-30 + Math.random() * 60),
@@ -113,7 +120,7 @@ export class CardGame extends GameTemplate {
             y: lerp(120, -340, Math.random()),
             ease: Power0.easeInOut,
         }).then(() => {
-            if (this.activeCard - 1 > 0) {
+            if (this.activeCard > 0 && this.activeCard < CARD_TOTAL - 1) {
                 const bottomCard = this.cards[this.activeCard - 1];
                 setTimeout(
                     (dataCard) => {
