@@ -22,7 +22,7 @@ module.exports = merge(common, {
             filename: './index.html',
         }),
         new ZipPlugin({
-            filename: './task_1-' + time.getTime,
+            filename: 'task_1-' + time.getTime(),
             path: './',
         }),
     ],
@@ -30,6 +30,6 @@ module.exports = merge(common, {
     mode: 'production',
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, '../dist'),
+        path: path.resolve(__dirname, './dist'),
     },
 });

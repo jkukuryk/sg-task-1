@@ -23,6 +23,8 @@ const positionRange = [imageSize[0] * 0.7, imageSize[1] * 0.7];
 const emojiSize = 72;
 const emojiCount = 135;
 const emojiGrid = [16, 9];
+import emoji from 'assets/emoji/smileys-emotion-00.png';
+
 export class ImageGenerator extends MonoBehavior {
     imageContainer: Container;
     fontLoaded = false;
@@ -34,7 +36,7 @@ export class ImageGenerator extends MonoBehavior {
         this.imageContainer = createContainer(LAYER_GAME);
         this.imageContainer.y = -400;
         this.imageContainer.alpha = 0;
-        this.emojiTexture = Texture.from('emoji');
+        this.emojiTexture = Texture.from(emoji);
     }
 
     update(deltaTime: number): void {
